@@ -1,0 +1,72 @@
+package gz.tar.ultimagz.lmassignment.presentation.coinInfo
+
+import androidx.compose.material.Colors
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import gz.tar.ultimagz.domain.lmassignment.repository.CoinRepository
+import gz.tar.ultimagz.lmassignment.presentation.coinlist.model.CoinInfoViewData
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class CoinInfoViewModel @Inject constructor(
+    private val repository: CoinRepository
+): ViewModel() {
+    private var coin = mutableStateOf("")
+    private var colorsState = mutableStateOf<Colors?>(null)
+    var coinInfo = mutableStateOf<CoinInfoViewData?>(null)
+    var loadError = mutableStateOf(false)
+    var isLoading = mutableStateOf(false)
+
+    fun getSelectCoinInfo() {
+        getCoinInfo(coin.value, colorsState.value)
+    }
+
+    fun selectCoin(uuid: String, colors: Colors?) {
+        viewModelScope.launch {
+            coin.value = uuid
+            colorsState.value = colors
+        }
+    }
+
+    private fun getCoinInfo(uuid: String, colors: Colors?) {
+        viewModelScope.launch {
+            coin.value = uuid
+
+            repository.getCoinInfo(uuid)
+                .onStart {
+                    loadError.value = false
+                    isLoading.value = true
+                    delay(2_000)
+                }
+                .onCompletion {
+                    isLoading.value = false
+                    loadError.value = false
+                }
+                .catch {
+                    isLoading.value = false
+                    loadError.value = true
+                }
+                .collect {
+                    coinInfo.value = CoinInfoViewData.from(
+                        coinInfo = it,
+                        defaultNameColor = colors?.onPrimary ?: Color.Black,
+                        symbolColor = colors?.onPrimary ?: Color.Black,
+                    )
+                }
+        }
+    }
+
+    fun deselectCoin() {
+        coin.value = ""
+        colorsState.value = null
+        coinInfo.value = null
+    }
+}
