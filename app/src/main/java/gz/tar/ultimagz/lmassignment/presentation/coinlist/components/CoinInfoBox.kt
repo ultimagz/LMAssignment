@@ -2,7 +2,6 @@ package gz.tar.ultimagz.lmassignment.presentation.coinlist.components
 
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,7 +36,6 @@ import coil.request.ImageRequest
 import de.charlex.compose.HtmlText
 import gz.tar.ultimagz.lmassignment.presentation.coinInfo.CoinInfoViewModel
 import gz.tar.ultimagz.lmassignment.presentation.coinlist.model.CoinInfoViewData
-import gz.tar.ultimagz.lmassignment.presentation.coinlist.model.CoinModel
 import gz.tar.ultimagz.lmassignment.theme.Divider
 import gz.tar.ultimagz.lmassignment.utils.formatToShortScale
 
@@ -66,7 +64,6 @@ fun CoinInfoBox(
                     .fillMaxHeight()
                     .padding(vertical = 12.dp),
                 onRetryClick = {
-                    Log.e("---", "onRetryClick")
                     viewModel.getSelectCoinInfo()
                 }
             )

@@ -1,12 +1,10 @@
 package gz.tar.ultimagz.lmassignment.presentation.coinlist
 
-import androidx.compose.material.Colors
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import gz.tar.ultimagz.domain.lmassignment.repository.CoinRepository
-import gz.tar.ultimagz.lmassignment.presentation.coinlist.model.CoinInfoViewData
 import gz.tar.ultimagz.lmassignment.presentation.coinlist.model.CoinModel
 import gz.tar.ultimagz.lmassignment.presentation.coinlist.model.CoinViewData
 import gz.tar.ultimagz.lmassignment.utils.Constants
@@ -24,12 +22,17 @@ class CoinListViewModel @Inject constructor(
 ): ViewModel() {
     private var currentPage = 0
     var coinList = mutableStateOf<List<CoinModel>>(listOf())
-    var selectedCoin = mutableStateOf<CoinInfoViewData?>(null)
     var loadError = mutableStateOf(false)
     var isLoading = mutableStateOf(false)
     var endReached = mutableStateOf(false)
 
     init {
+        loadCoinsPaginated()
+    }
+
+    fun refresh() {
+        currentPage = 0
+        coinList.value = listOf()
         loadCoinsPaginated()
     }
 
@@ -57,22 +60,5 @@ class CoinListViewModel @Inject constructor(
                     currentPage++
                 }
         }
-    }
-
-    fun select(coin: CoinModel, colors: Colors) {
-        viewModelScope.launch {
-            repository.getCoinInfo(coin.uuid)
-                .collect {
-                    selectedCoin.value = CoinInfoViewData.from(
-                        coinInfo = it,
-                        defaultNameColor = colors.onPrimary,
-                        symbolColor = colors.onPrimary,
-                    )
-                }
-        }
-    }
-
-    fun deselectCoin() {
-        selectedCoin.value = null
     }
 }

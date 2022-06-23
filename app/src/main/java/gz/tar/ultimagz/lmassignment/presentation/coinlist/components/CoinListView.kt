@@ -1,6 +1,7 @@
 package gz.tar.ultimagz.lmassignment.presentation.coinlist.components
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -36,7 +37,10 @@ fun CoinListView(
     val itemCount = coinList.size
 
     LazyColumn(
-        modifier = Modifier.padding(horizontal = 8.dp),
+        modifier = Modifier
+            .padding(horizontal = 8.dp)
+            .fillMaxWidth()
+            .fillMaxHeight(),
     ) {
         item {
             Spacer(modifier = Modifier.height(20.dp))
