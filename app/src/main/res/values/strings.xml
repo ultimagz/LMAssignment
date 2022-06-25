@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">LMAssignment</string>
-    <string name="coin_list_title">Buy, sell and hold crypto</string>
+    <string name="coin_list_section_title">Buy, sell and hold crypto</string>
+    <string name="try_again">Try again</string>
+    <string name="could_not_load_data">Could not load data</string>
+    <string name="not_result_title">Sorry</string>
+    <string name="not_result_message">No result match this keyword</string>
+    <string name="top_3_rank_section_title">Top 3 rank crypto</string>
+    <string name="placeholder_search">Search</string>
+    <string name="invite_message_template">"You can earn $10  when you invite a friend to buy crypto. %s"</string>
+    <string name="invite_link_text">Invite your friend</string>
 </resources>

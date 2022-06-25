@@ -8,7 +8,7 @@
         </trust-anchors>
     </debug-overrides>
 
-    <base-config cleartextTrafficPermitted="true">
+    <base-config cleartextTrafficPermitted="false">
         <trust-anchors>
             <certificates src="system" />
         </trust-anchors>

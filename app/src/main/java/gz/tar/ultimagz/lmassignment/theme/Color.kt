@@ -1,15 +1,38 @@
 package gz.tar.ultimagz.lmassignment.theme
 
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-val Color.Companion.PriceUp: Color
-    get() = Color(0xFF13BC24)
+data class AppColors(
+    val priceUp: Color = Color.Unspecified,
+    val priceDown: Color = Color.Unspecified,
+    val textButton: Color= Color.Unspecified,
+    val divider: Color = Color.Unspecified,
+    val indicator: Color = Color.Unspecified,
+    val searchBoxBackground: Color = Color.Unspecified,
+    val searchIconColor: Color = Color.Unspecified,
+) {
+    companion object {
+        val LightAppColors = AppColors(
+            priceUp = Color(0xFF13BC24),
+            priceDown = Color(0xFFF82D2D),
+            textButton = Color(0xFF38A0FF),
+            divider = Color(0xFFEEEEEE),
+            indicator = Color(0xFF38A0FF),
+            searchBoxBackground = Color(0xFFEEEEEE),
+            searchIconColor = Color(0xFFC4C4C4),
+        )
 
-val Color.Companion.PriceDown: Color
-    get() = Color(0xFFF82D2D)
+        val DarkAppColors = AppColors(
+            priceUp = Color(0xFF13BC24),
+            priceDown = Color(0xFFF82D2D),
+            textButton = Color(0xFF38A0FF),
+            divider = Color(0xFFEEEEEE),
+            indicator = Color(0xFF38A0FF),
+            searchBoxBackground = Color(0xFF555555),
+            searchIconColor = Color.White,
+        )
+    }
+}
 
-val Color.Companion.TextButton: Color
-    get() = Color(0xFF38A0FF)
-
-val Color.Companion.Divider: Color
-    get() = Color(0xFFEEEEEE)
+val LocalAppColors = compositionLocalOf { AppColors() }

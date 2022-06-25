@@ -1,4 +1,4 @@
-package gz.tar.ultimagz.lmassignment.presentation.coinlist.components
+package gz.tar.ultimagz.lmassignment.presentation.coinInfo
 
 import android.content.Intent
 import android.net.Uri
@@ -34,9 +34,10 @@ import coil.compose.SubcomposeAsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import de.charlex.compose.HtmlText
-import gz.tar.ultimagz.lmassignment.presentation.coinInfo.CoinInfoViewModel
 import gz.tar.ultimagz.lmassignment.presentation.coinlist.model.CoinInfoViewData
-import gz.tar.ultimagz.lmassignment.theme.Divider
+import gz.tar.ultimagz.lmassignment.presentation.components.ErrorBox
+import gz.tar.ultimagz.lmassignment.presentation.components.LoadingBox
+import gz.tar.ultimagz.lmassignment.theme.LocalAppColors
 import gz.tar.ultimagz.lmassignment.utils.formatToShortScale
 
 @ExperimentalMaterialApi
@@ -80,6 +81,7 @@ fun CoinInfoContent(
     coin: CoinInfoViewData
 ) {
     val context = LocalContext.current
+    val appColors = LocalAppColors.current
 
     Column {
         Spacer(modifier = Modifier.height(32.dp))
@@ -111,7 +113,7 @@ fun CoinInfoContent(
                     style = MaterialTheme.typography.h6,
                 )
                 Text(
-                    String.format("Price $%.2f", coin.price.toBigDecimal()),
+                    String.format("PRICE $%.2f", coin.price.toBigDecimal()),
                     color = MaterialTheme.colors.onBackground,
                     style = MaterialTheme.typography.subtitle2,
                 )
@@ -138,7 +140,7 @@ fun CoinInfoContent(
 
         Divider(
             thickness = 1.dp,
-            color = Color.Divider
+            color = appColors.divider
         )
 
         TextButton(

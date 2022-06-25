@@ -19,26 +19,32 @@ import javax.inject.Inject
 class CoinInfoViewModel @Inject constructor(
     private val repository: CoinRepository
 ): ViewModel() {
-    private var coin = mutableStateOf("")
-    private var colorsState = mutableStateOf<Colors?>(null)
+    private var coin = ""
+    private var colorsState: Colors? = null
+
     var coinInfo = mutableStateOf<CoinInfoViewData?>(null)
+        private set
+
     var loadError = mutableStateOf(false)
+        private set
+
     var isLoading = mutableStateOf(false)
+        private set
 
     fun getSelectCoinInfo() {
-        getCoinInfo(coin.value, colorsState.value)
+        getCoinInfo(coin, colorsState)
     }
 
     fun selectCoin(uuid: String, colors: Colors?) {
         viewModelScope.launch {
-            coin.value = uuid
-            colorsState.value = colors
+            coin = uuid
+            colorsState = colors
         }
     }
 
     private fun getCoinInfo(uuid: String, colors: Colors?) {
         viewModelScope.launch {
-            coin.value = uuid
+            coin = uuid
 
             repository.getCoinInfo(uuid)
                 .onStart {
@@ -65,8 +71,8 @@ class CoinInfoViewModel @Inject constructor(
     }
 
     fun deselectCoin() {
-        coin.value = ""
-        colorsState.value = null
+        coin = ""
+        colorsState = null
         coinInfo.value = null
     }
 }

@@ -10,6 +10,7 @@ import retrofit2.http.Query
 interface CoinRankingApi {
     @GET("coins")
     suspend fun getCoins(
+        @Query("search") name: String = "",
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
     ): CoinRankingResponse<CoinsDataResponse>

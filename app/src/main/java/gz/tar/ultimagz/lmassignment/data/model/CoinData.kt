@@ -5,50 +5,50 @@ import gz.tar.ultimagz.domain.lmassignment.model.Coin
 
 data class CoinData(
     @SerializedName("btcPrice")
-    val btcPrice: String,
+    val btcPrice: String?,
     @SerializedName("change")
-    val change: String,
+    val change: String?,
     @SerializedName("coinrankingUrl")
     val coinRankingUrl: String?,
     @SerializedName("color")
     val color: String?,
     @SerializedName("24hVolume")
-    val hVolume: String,
+    val hVolume: String?,
     @SerializedName("iconUrl")
-    val iconUrl: String,
+    val iconUrl: String?,
     @SerializedName("listedAt")
     val listedAt: Int,
     @SerializedName("marketCap")
-    val marketCap: String,
+    val marketCap: String?,
     @SerializedName("name")
     val name: String,
     @SerializedName("price")
-    val price: String,
+    val price: String?,
     @SerializedName("rank")
     val rank: Int,
     @SerializedName("sparkline")
-    val sparkline: List<String>,
+    val sparkline: List<String?>,
     @SerializedName("symbol")
-    val symbol: String,
+    val symbol: String?,
     @SerializedName("uuid")
     val uuid: String
 )
 
 fun CoinData.toDomainModel(): Coin {
     return Coin(
-        btcPrice = btcPrice,
-        change = change,
+        btcPrice = btcPrice ?: "0",
+        change = change ?: "0",
         coinRankingUrl = coinRankingUrl ?: "",
         color = color ?: "",
-        hVolume = hVolume,
-        iconUrl = iconUrl,
+        hVolume = hVolume ?: "0",
+        iconUrl = iconUrl ?: "",
         listedAt = listedAt,
-        marketCap = marketCap,
+        marketCap = marketCap ?: "0",
         name = name,
-        price = price,
+        price = price ?: "0",
         rank = rank,
-        sparkline = sparkline,
-        symbol = symbol,
+        sparkline = sparkline.filterNotNull(),
+        symbol = symbol ?: "",
         uuid = uuid,
     )
 }

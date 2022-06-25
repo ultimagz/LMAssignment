@@ -4,4 +4,6 @@ object Constants {
     const val ACCESS_TOKEN = "coinranking6384bfcf61c65f225544c3307924914b36102c05f49e30d9"
     const val BASE_URL = "https://api.coinranking.com/v2/"
     const val PAGE_SIZE = 20
+    const val INVITE_FRIEND_TAG = "URL"
+    const val INVITE_FRIEND_URL = "https://careers.lmwn.com"
 }

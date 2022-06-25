@@ -1,4 +1,4 @@
-package gz.tar.ultimagz.lmassignment.presentation.coinlist.components
+package gz.tar.ultimagz.lmassignment.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
