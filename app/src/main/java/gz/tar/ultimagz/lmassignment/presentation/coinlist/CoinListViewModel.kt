@@ -32,6 +32,7 @@ class CoinListViewModel @Inject constructor(
     private var actualItemIndex = 1
     private var nextInviteIndex = 5
     private var job: Job? = null
+    private var autoRefreshJob: Job? = null
 
     var topRankCoins = mutableStateOf<List<CoinModel>>(listOf())
         private set
@@ -52,7 +53,7 @@ class CoinListViewModel @Inject constructor(
         private set
 
     init {
-        loadCoinsPaginated()
+        refresh()
     }
 
     fun refresh() {
@@ -64,6 +65,7 @@ class CoinListViewModel @Inject constructor(
         job?.cancel()
         job = viewModelScope.launch {
             doSearch()
+//            refreshScheduleUpdate()
         }
     }
 
@@ -94,7 +96,6 @@ class CoinListViewModel @Inject constructor(
             .onStart {
                 loadError.value = false
                 isLoading.value = true
-                delay(1_500)
             }
             .onCompletion {
                 isLoading.value = false
@@ -131,6 +132,31 @@ class CoinListViewModel @Inject constructor(
 
             actualItemIndex++
             newAcc
+        }
+    }
+
+    private fun refreshScheduleUpdate() {
+        autoRefreshJob?.cancel()
+        autoRefreshJob = viewModelScope.launch {
+            while (true) {
+                delay(10_000)
+                repository.getCoins(searchName, 0, currentPage * Constants.PAGE_SIZE)
+                    .map { CoinViewData.from(it) }
+                    .onStart {
+                        loadError.value = false
+                    }
+                    .onCompletion {
+                        loadError.value = false
+                    }
+                    .catch {
+                        loadError.value = true
+                    }
+                    .collect {
+                        val sortedCoins = it.coins.sortedBy { coin -> coin.rank }
+                        topRankCoins.value = sortedCoins.take(3)
+                        coinList.value = createListWithInviteItem(sortedCoins.drop(3))
+                    }
+            }
         }
     }
 }
