@@ -65,7 +65,7 @@ class CoinListViewModel @Inject constructor(
         job?.cancel()
         job = viewModelScope.launch {
             doSearch()
-//            refreshScheduleUpdate()
+            refreshScheduleUpdate()
         }
     }
 

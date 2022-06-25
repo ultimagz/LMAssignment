@@ -2,7 +2,6 @@ package gz.tar.ultimagz.lmassignment.presentation.coinlist.components
 
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,7 +27,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import gz.tar.ultimagz.lmassignment.R
 import gz.tar.ultimagz.lmassignment.utils.Constants
 
