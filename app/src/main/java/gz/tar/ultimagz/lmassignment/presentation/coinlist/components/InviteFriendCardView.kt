@@ -1,5 +1,7 @@
 package gz.tar.ultimagz.lmassignment.presentation.coinlist.components
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -25,6 +28,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import gz.tar.ultimagz.lmassignment.R
 import gz.tar.ultimagz.lmassignment.utils.Constants
 
@@ -32,6 +36,8 @@ import gz.tar.ultimagz.lmassignment.utils.Constants
 fun InviteFriendCardView(
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+
     Card(
         modifier = modifier,
         backgroundColor = Color(0xFFC5E6FF),
@@ -61,8 +67,16 @@ fun InviteFriendCardView(
                     onClick = {
                         inviteString
                             .getStringAnnotations(Constants.INVITE_FRIEND_TAG, it, it)
-                            .firstOrNull()?.let { stringAnnotation ->
-                                Log.e("Click Invite friend", stringAnnotation.item)
+                            .firstOrNull()?.let { _ ->
+                                Intent().apply {
+                                    action = Intent.ACTION_SEND
+                                    putExtra(Intent.EXTRA_TEXT, Uri.parse(Constants.INVITE_FRIEND_URL))
+                                    type = "text/plain"
+                                }.let { intent ->
+                                    Intent.createChooser(intent, null)
+                                }.run {
+                                    context.startActivity(this@run)
+                                }
                             }
                     }
                 )
